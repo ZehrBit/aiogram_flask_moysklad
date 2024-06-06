@@ -1,0 +1,58 @@
+body {
+	background: rgba(69, 72, 87, 0.12);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+}
+
+.radio {
+	background: #454857;
+	padding: 2px;
+	border-radius: 2px;
+	position: relative;
+}
+
+.radio input {
+	width: auto;
+	height: 100%;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	outline: none;
+	cursor: pointer;
+	border-radius: 0px;
+	padding: 0px 4px;
+	background: #454857;
+	color: #bdbdbdbd;
+	font-size: 14px;
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+		"Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+		"Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+	transition: all 50ms linear;
+}
+
+.radio input:checked {
+	background-image: linear-gradient(180deg, #95d891, #74bbad);
+	color: #fff;
+	box-shadow: 0 1px 1px #0000002e;
+	text-shadow: 0 1px 0px #79485f7a;
+}
+
+.radio input:before {
+	content: attr(label);
+	display: inline-block;
+	text-align: center;
+	width: 100%;
+}
+
+.btn-new {
+    border-radius: 1px;
+    color: white;
+    transition: .2s linear;
+    background: #95d891;
+}
+
+.btn-new:hover {
+   box-shadow: #9d76ff 0 0px 0px 40px inset;
+}
