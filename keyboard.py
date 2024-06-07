@@ -1,12 +1,12 @@
-from aiogram.types import WebAppInfo, InlineKeyboardButton, InlineKeyboardMarkup
+from aiogram.types import WebAppInfo, InlineKeyboardButton
+from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 
 def get_keyboard():
-    # Создание инлайн-кнопки WebApp
     web_app = WebAppInfo(url="https://www.google.com")
-    keyboard = InlineKeyboardMarkup()
+    builder = InlineKeyboardBuilder()
     who_works = InlineKeyboardButton(text="Кто в работе", web_app=web_app)
     orders = InlineKeyboardButton(text="Заказы", callback_data="orders")
     audit = InlineKeyboardButton(text="Проверка документов", callback_data="audit")
-    keyboard.add(orders, audit, who_works)
-    return keyboard
+    builder.add(orders, audit, who_works)
+    return builder
