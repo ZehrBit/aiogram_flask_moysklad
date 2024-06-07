@@ -1,6 +1,8 @@
 import datetime
 import requests
 import config
+from aiogram.types import Message
+from functools import wraps
 
 
 def time_interval():
@@ -26,8 +28,9 @@ def request_to_MoySklad_orders(opr3=None):
                 f'owner=https://api.moysklad.ru/api/remap/1.2/entity/employee/25599451-4b96-11e7-7a6c-d2a90011c47a',
             headers=config.HEADER, timeout=30).json()
     elif opr3 is None:
-        return requests.get(url=f'https://api.moysklad.ru/api/remap/1.2/entity/customerorder?filter=created>={time_interval()[0]};'
-                            f'created<{time_interval()[1]}', headers=config.HEADER, timeout=30).json()
+        return requests.get(
+            url=f'https://api.moysklad.ru/api/remap/1.2/entity/customerorder?filter=created>={time_interval()[0]};'
+                f'created<{time_interval()[1]}', headers=config.HEADER, timeout=30).json()
 
 
 def request_to_MoySklad_demands(opr3=None):
@@ -49,6 +52,7 @@ def request_to_MoySklad_stores():
     return requests.get('https://api.moysklad.ru/api/remap/1.2/entity/store', headers=config.HEADER,
                         timeout=30).json()
 
+
 def request_to_MoySklad_cashin():
     """Возвращает JSON с данными о приходных ордерах"""
     return requests.get(url=f'https://api.moysklad.ru/api/remap/1.2/entity/cashin?filter=created>={time_interval()[0]};'
@@ -57,5 +61,13 @@ def request_to_MoySklad_cashin():
                         headers=config.HEADER, timeout=30).json()
 
 
-def user_verification(func):
-    pass
+def allowed_users_only(handler):
+    """Декоратор, который предоставляет доступ к боту
+    если id пользователя есть в списке config.ID_USERS_LIST = [int, int, ..., int]"""
+    @wraps(handler)
+    async def wrapper(message: Message, *args, **kwargs):
+        if message.from_user.id not in config.ID_USERS_LIST:
+            await message.answer("У Вас нет доступа к этому боту.", parse_mode='HTML')
+        else:
+            return await handler(message, *args, **kwargs)
+    return wrapper
