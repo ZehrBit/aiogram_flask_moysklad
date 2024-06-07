@@ -2,8 +2,6 @@ import utils
 from database_processing import execute_car_status
 
 
-
-
 def create_orders_answer():
     """
     Формирует строку-ответ на основе двух JSON и статуса машины из БД

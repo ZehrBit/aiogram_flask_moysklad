@@ -1,12 +1,9 @@
-from database_processing import execute_car_status, update_db
+from database_processing import execute_car_status
 
 
 def form_who_works():
     form = ''
     car_list = execute_car_status()
-    if not car_list:
-        update_db()
-        car_list = execute_car_status()
     for car_num, status in car_list:
         checked1 = ''
         checked2 = ''

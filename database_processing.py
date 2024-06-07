@@ -42,5 +42,8 @@ def execute_car_status():
                    )
     cursor.execute('SELECT * FROM car_status')
     car_status = cursor.fetchall()
+    if not car_status:
+        update_db()
+        car_status = execute_car_status()
     conn.close()
     return car_status
