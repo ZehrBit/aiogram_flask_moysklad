@@ -48,3 +48,15 @@ def execute_car_status():
         car_status = execute_car_status()
     conn.close()
     return car_status
+
+
+def reset_db():
+    conn = sqlite3.connect('car_status.db')
+    cursor = conn.cursor()
+    cursor.execute('CREATE TABLE IF NOT EXISTS car_status'
+                   '(car_num TEXT NOT NULL,'
+                   'status INTEGER)'
+                   )
+    cursor.execute('UPDATE car_status SET status = 1;')
+    conn.commit()
+    conn.close()

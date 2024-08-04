@@ -1,3 +1,4 @@
+import config
 import utils
 import datetime
 
@@ -38,11 +39,11 @@ def create_audit_answer():
         """Проверка суммы доставки у курьеров"""
         answer = ''
         for order in orders_json['rows']:
-            if order['owner']['meta']['href'][-36:] == '25599451-4b96-11e7-7a6c-d2a90011c47a':
+            if order['owner']['meta']['href'][-36:] == config.ID_OPERATOR:
                 try:
                     for attribute in order['attributes']:
                         if attribute['name'] == 'Сумма доставки':
-                            if 490 <= attribute['value'] <= 1090:
+                            if 590 <= attribute['value'] <= 1190:
                                 pass
                             else:
                                 answer += f'{order["name"]}\n'
@@ -55,6 +56,8 @@ def create_audit_answer():
         return answer
 
     def audit_car_number_in_order_and_demand():
+        """Проверяет совпадают ли номера машин(складов) в Заказах и Отгрузках.
+        Если не совпадают, то формирует строку с именами(номерами) этих Заказов и Отгрузок"""
         answer = ''
         idcar_ordername = {}
         for order in orders_json['rows']:
@@ -90,7 +93,8 @@ def create_audit_answer():
         return answer
 
     def audit_only_one_demand():
-        """Проверка заказов, что бы была одна отгрузка"""
+        """Проверяет заказы на связь с Отгрузками.
+        Формирует строку с именами(номерами) заказов, где больше одной отгрузки или где нет отгрузок вообще"""
         answer = ''
         for order in orders_json['rows']:
             try:
@@ -107,6 +111,8 @@ def create_audit_answer():
         return answer
 
     def audit_sum_in_order_and_demand():
+        """Проверяет совпадают ли суммы в Заказах и Отгрузках.
+        Если не совпадают, то формирует строку с именами(номерами) этих Заказов и Отгрузок"""
         answer = ''
         full_sum = 0.0
         id_sum_ordername = []
@@ -143,6 +149,8 @@ def create_audit_answer():
         return answer, f'Общая сумма заказов:  <strong>{str(full_sum)}</strong> ₽', f'6% от общей суммы:  <strong>{str(zp)}</strong> ₽'
 
     def audit_date_in_order_demand_cashin():
+        """Проверяет совпадает ли даты в Заказах, Отгрузках и Приходных ордерах.
+        Если не совпадают, то формирует строку с именами(номерами) этих Заказов и Отгрузок"""
         answer = ''
         id_date_ordername = []
         id_date_demandname = []

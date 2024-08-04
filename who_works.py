@@ -39,8 +39,9 @@ def form_who_works():
                 f'<div align = "center">'
                 f'<h3>Кто в работе</h3>'
                 f'{form}'
-                f'<input class="btn-new" type="submit" value="Сохранить">'
+                f'<input class="btn-new" formaction="/" type="submit" value="Сохранить">'
                 f'</form>'
+                f'<input class="btn-new" formaction="/reset" type="submit" value="Сбросить">'
                 f'</div>'
                 f'</body>'
                 f'</html>')

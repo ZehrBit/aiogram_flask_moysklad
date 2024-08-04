@@ -1,9 +1,8 @@
-from flask import Flask, render_template, url_for, request
+from flask import Flask, request
 
 import config
 from who_works import form_who_works
 import database_processing as dp
-
 
 app = Flask(__name__)
 
@@ -17,5 +16,11 @@ def who_works():
         return form_who_works()
 
 
+@app.route('/reset', methods=['get', 'post'])
+def reset_button():
+    dp.reset_db()
+    return form_who_works()
+
+
 if __name__ == '__main__':
-    app.run(debug=True, host=config.HOST, port=config.PORT)
+    app.run(debug=False, host=config.HOST, port=config.PORT)

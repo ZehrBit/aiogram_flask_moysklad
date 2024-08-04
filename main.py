@@ -8,11 +8,9 @@ import utils
 from aiogram import Bot, Dispatcher, types, F
 from aiogram.filters import CommandStart, Command
 from aiogram.types import Message
-from aiogram.client.session.aiohttp import AiohttpSession
 
 dp = Dispatcher()
-session = AiohttpSession()
-bot = Bot(config.TELEGRAM_TOKEN, session=session)
+bot = Bot(config.TELEGRAM_TOKEN)
 
 
 @dp.message(CommandStart())
